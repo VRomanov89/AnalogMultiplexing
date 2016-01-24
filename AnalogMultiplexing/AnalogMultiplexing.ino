@@ -1,14 +1,14 @@
 int pin_Out_S0 = 8;
 int pin_Out_S1 = 9;
 int pin_Out_S2 = 10;
-int pin_In_Mux1 = 11;
+int pin_In_Mux1 = A0;
 int Mux1_State[8] = {0};
 
 void setup() {
   pinMode(pin_Out_S0, OUTPUT);
   pinMode(pin_Out_S1, OUTPUT);
   pinMode(pin_Out_S2, OUTPUT);
-  pinMode(pin_In_Mux1, INPUT);
+  //pinMode(pin_In_Mux1, INPUT);
   Serial.begin(9600);
 }
 
@@ -19,6 +19,7 @@ void loop() {
       Serial.println(Mux1_State[i]);
     } else {
       Serial.print(Mux1_State[i]);
+      Serial.print(",");
     }
   }
 }
@@ -28,7 +29,7 @@ void updateMux1 () {
     digitalWrite(pin_Out_S0, HIGH && (i & B00000001));
     digitalWrite(pin_Out_S1, HIGH && (i & B00000010));
     digitalWrite(pin_Out_S2, HIGH && (i & B00000100));
-    Mux1_State[i] = digitalRead(pin_In_Mux1);
+    Mux1_State[i] = analogRead(pin_In_Mux1);
   }
 }
 
